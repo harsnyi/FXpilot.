@@ -6,42 +6,43 @@ from datetime import datetime, timedelta
 import uuid
 import logging
 import pandas as pd
+from settings_handler import ScreeningOptionsHandler
+from view_screener_settings import create_tickers_bp
+from screener import Screener
+from logging.handlers import RotatingFileHandler
+
 
 app = Flask(__name__)
 load_dotenv()
 POLYGON_KEY = os.getenv('POLYGON_KEY')
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
+handler = ScreeningOptionsHandler('data/screening_options', 'settings_schema.yaml')
+
+tickers_bp = create_tickers_bp(handler)
+app.register_blueprint(tickers_bp, url_prefix='/settings')
+
+if os.path.exists('logs') is False:
+    os.makedirs('logs')
+
+log_handler = RotatingFileHandler('logs/app.log', maxBytes=10*1024*1024, backupCount=5)
+log_handler.setLevel(logging.INFO)
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+log_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+
+logging.getLogger().addHandler(log_handler)
+logging.getLogger().addHandler(console_handler)
+logging.getLogger().setLevel(logging.INFO)
 
 @app.route('/screen', methods=['GET'])
 def screen_forex():
     screen_key = str(uuid.uuid4())[:8]
-    app.logger.info(f"Screening starts with key {screen_key}")
+    screener = Screener(screen_key, POLYGON_KEY, handler, logger=logging.getLogger())
+    screener.screen()
 
-    today = datetime.now()
-    start_date = today - timedelta(days=50)
-    ticker = "C:EURUSD"
-    response = requests.get(f'https://api.polygon.io/v2/aggs/ticker/{ticker}/range/1/day/{start_date.strftime("%Y-%m-%d")}/{today.strftime("%Y-%m-%d")}?adjusted=true&sort=asc&apiKey={POLYGON_KEY}')
-    if response.status_code == 200:
-        
-        response = response.json()
-        print(response)
-        data = response.get('results', None)
-        if data:
-            app.logger.info(f"Data retrieved for {ticker}")
-            historical_data = pd.DataFrame(data)
-            historical_data['date'] = pd.to_datetime(historical_data['t'], unit='ms')
-            print(historical_data.head())
-            
-            
-        
-        return jsonify({"message": "Success"}), 200
-    else:
-        print(response.text)
-        return jsonify({"message": "Error"}), 500
+    return jsonify({"message": "Success"}), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000)

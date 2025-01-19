@@ -174,3 +174,7 @@ cython_debug/
 .pypirc
 
 venv_fx_pilot/
+
+data
+
+logs
