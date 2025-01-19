@@ -25,9 +25,6 @@ indicators:
   required: true
   allowed_types:
     - sma
-    - ema
-    - rsi
-    - macd
   params_schema:
     width:
       type: integer
@@ -57,12 +54,6 @@ alerts:
     - crossover
     - threshold
   params_schema:
-    direction:
-      type: string
-      description: "Direction of the crossover"
-      allowed_values:
-        - up
-        - down
     indicators:
       type: list
       description: "List of indicators involved in the alert"
