@@ -6,6 +6,7 @@ from utils import get_ticker_history
 import pandas as pd
 import mplfinance as mpf
 import matplotlib.pyplot as plt
+import numpy as np
 
 class Screener:
     def __init__(self, screen_key, POLYGON_KEY, handler: ScreeningOptionsHandler, logger):
@@ -17,7 +18,8 @@ class Screener:
         self.count = 0
         if os.path.exists(self.SCREEN_PATH) is False:
             os.makedirs(self.SCREEN_PATH)
-    
+
+
     def screen(self):
         options = self.handler.get_options()
         self.logger.info(f"Screening starts with key {self.screen_key}")
@@ -35,8 +37,11 @@ class Screener:
             os.makedirs(option_path)
         
         observed_tickers = details.get('observed_tickers', [])
+        alerts = details.get('alerts', [])
+        alert_names = [alert['name'] for alert in alerts]
         depth = 50
         today = datetime.now()
+        results = pd.DataFrame(columns=observed_tickers, index=alert_names)
         for ticker in observed_tickers:
             if self.count % 4 == 0:
                 self.logger.info("Sleeping for 1 minute to avoid rate limit")
@@ -55,6 +60,22 @@ class Screener:
                 plt.savefig(os.path.join(option_path, f'history_{ticker_c}.png'), format='png')
                 plt.close()
                 
+                # Generating the indicators
+                indicators = details.get('indicators', [])
+                for indicator in indicators:
+                    self.logger.info(f"Processing indicator {indicator}")
+                    self.generate_indicator(indicator, historical_data)
+                
+                # Check for alerts
+                alert_results = []
+                for alert in alerts:
+                    self.logger.info(f"Processing alert {alert}")
+                    alert_results.append(self.generate_alert(alert, historical_data))
+                
+                results[ticker] = alert_results
+                
+                historical_data.to_csv(os.path.join(option_path, f'{ticker_c}.csv'))
+                results.to_csv(os.path.join(option_path, 'results.csv'))
                 self.logger.info(f"Data fetched for {ticker}")
             else:
                 self.logger.error(f"Error in fetching data for {ticker}")
@@ -69,3 +90,32 @@ class Screener:
         historical_data.set_index('date', inplace=True)
         historical_data.rename(columns={'o': 'Open', 'h': 'High', 'l': 'Low', 'c': 'Close'}, inplace=True)
         return historical_data
+    
+    
+    def generate_indicator(self, indicator, data):
+        if indicator["type"] == 'sma':
+            name = indicator.get('name', '')
+            if name == '':
+                self.logger.error("Indicator name is required")
+                return
+            
+            params = indicator.get('params', {})
+            width = params.get('width', 9)
+            sma_series = self.calculate_SMA(data, width)
+            data[name] = sma_series
+
+    def generate_alert(self, alert, data):
+        if alert["type"] == 'crossover':
+            params = alert.get('params', {})
+            depth = alert.get('depth', 1)
+            indicators = params.get('indicators', [])
+            self.logger.info(f"Checking crossover for {indicators}")
+            crossover_data = data[indicators[0]] > data[indicators[1]]
+
+            if crossover_data[-depth:].all():
+                return 1  
+            
+    def calculate_SMA(self, data: pd.DataFrame, width: int):
+        sma_series = data["Close"].rolling(window=width, min_periods=1).mean()
+        sma_series[:width] = np.nan
+        return sma_series
