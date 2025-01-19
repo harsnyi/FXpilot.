@@ -1,13 +1,15 @@
 
-import yaml
 import os
+
+import yaml
+
 
 class ScreeningOptionsHandler:
     def __init__(self, OPTIONS_PATH, SCHEMA_PATH):
         self.OPTIONS_PATH = OPTIONS_PATH
         self.options = {}
-        
-        with open(SCHEMA_PATH, 'r') as f:
+
+        with open(SCHEMA_PATH) as f:
             try:
                 self.schema = yaml.safe_load(f)
             except yaml.YAMLError:
@@ -16,11 +18,11 @@ class ScreeningOptionsHandler:
 
         if os.path.exists(OPTIONS_PATH):
             for file in os.listdir(OPTIONS_PATH):
-                if file.endswith('.yaml'):
-                    with open(f"{OPTIONS_PATH}/{file}", 'r') as f:
+                if file.endswith(".yaml"):
+                    with open(f"{OPTIONS_PATH}/{file}") as f:
                         try:
                             data = yaml.safe_load(f) or {}
-                            name = data.get('name', file)
+                            name = data.get("name", file)
                             self.options[name] = data
                         except yaml.YAMLError:
                             print(f"Warning: Corrupted YAML file {file}. Skipping.")
@@ -76,7 +78,7 @@ class ScreeningOptionsHandler:
 
         option_file = os.path.join(self.OPTIONS_PATH, f"{option_name}.yaml")
         try:
-            with open(option_file, 'w') as f:
+            with open(option_file, "w") as f:
                 yaml.safe_dump(new_data, f, default_flow_style=False)
 
             self.options[option_name] = new_data
@@ -95,7 +97,7 @@ class ScreeningOptionsHandler:
 
         option_file = os.path.join(self.OPTIONS_PATH, f"{option_name}.yaml")
         try:
-            with open(option_file, 'w') as f:
+            with open(option_file, "w") as f:
                 yaml.safe_dump(new_data, f, default_flow_style=False)
 
             self.options[option_name] = new_data

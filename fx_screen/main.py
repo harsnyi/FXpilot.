@@ -1,34 +1,33 @@
-from flask import Flask, jsonify
-import requests
-import os
-from dotenv import load_dotenv
-from datetime import datetime, timedelta
-import uuid
 import logging
-import pandas as pd
-from settings_handler import ScreeningOptionsHandler
-from view_screener_settings import create_tickers_bp
-from screener import Screener
+import os
+import uuid
 from logging.handlers import RotatingFileHandler
 
+from dotenv import load_dotenv
+from flask import Flask, jsonify
+
+from screener import Screener
+from settings_handler import ScreeningOptionsHandler
+from view_screener_settings import create_tickers_bp
+from pathlib import Path
 
 app = Flask(__name__)
 load_dotenv()
-POLYGON_KEY = os.getenv('POLYGON_KEY')
+POLYGON_KEY = os.getenv("POLYGON_KEY")
 
-handler = ScreeningOptionsHandler('data/screening_options', 'settings_schema.yaml')
+handler = ScreeningOptionsHandler("data/screening_options", "settings_schema.yaml")
 
 tickers_bp = create_tickers_bp(handler)
-app.register_blueprint(tickers_bp, url_prefix='/settings')
+app.register_blueprint(tickers_bp, url_prefix="/settings")
 
-if os.path.exists('logs') is False:
-    os.makedirs('logs')
+if os.path.exists("logs") is False:
+    os.path.makedirs("logs")
 
-log_handler = RotatingFileHandler('logs/app.log', maxBytes=10*1024*1024, backupCount=5)
+log_handler = RotatingFileHandler("logs/app.log", maxBytes=10*1024*1024, backupCount=5)
 log_handler.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 log_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 
@@ -36,7 +35,7 @@ logging.getLogger().addHandler(log_handler)
 logging.getLogger().addHandler(console_handler)
 logging.getLogger().setLevel(logging.INFO)
 
-@app.route('/screen', methods=['GET'])
+@app.route("/screen", methods=["GET"])
 def screen_forex():
     screen_key = str(uuid.uuid4())[:8]
     screener = Screener(screen_key, POLYGON_KEY, handler, logger=logging.getLogger())

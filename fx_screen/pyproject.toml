@@ -1,0 +1,294 @@
+[tool.poetry]
+name = "server"
+version = "0.1.0"
+description = ""
+authors = ["harsnyi <harsanyitanulo@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.10.12"
+anyio = "4.8.0"
+argon2-cffi = "23.1.0"
+argon2-cffi-bindings = "21.2.0"
+arrow = "1.3.0"
+asttokens = "3.0.0"
+async-lru = "2.0.4"
+attrs = "24.3.0"
+babel = "2.16.0"
+backports-tarfile = "1.2.0"
+beautifulsoup4 = "4.12.3"
+bleach = "6.2.0"
+blinker = "1.9.0"
+build = "1.2.2.post1"
+cachecontrol = "0.14.2"
+certifi = "2024.12.14"
+cffi = "1.17.1"
+charset-normalizer = "3.4.1"
+cleo = "2.1.0"
+click = "8.1.8"
+comm = "0.2.2"
+contourpy = "1.3.1"
+crashtest = "0.4.1"
+cryptography = "44.0.0"
+cycler = "0.12.1"
+debugpy = "1.8.12"
+decorator = "5.1.1"
+defusedxml = "0.7.1"
+distlib = "0.3.9"
+dulwich = "0.22.7"
+exceptiongroup = "1.2.2"
+executing = "2.1.0"
+fastjsonschema = "2.21.1"
+filelock = "3.16.1"
+flask = "3.1.0"
+fonttools = "4.55.3"
+fqdn = "1.5.1"
+h11 = "0.14.0"
+httpcore = "1.0.7"
+httpx = "0.28.1"
+idna = "3.10"
+importlib-metadata = "8.5.0"
+installer = "0.7.0"
+ipykernel = "6.29.5"
+ipython = "8.31.0"
+isoduration = "20.11.0"
+itsdangerous = "2.2.0"
+jaraco-classes = "3.4.0"
+jaraco-context = "6.0.1"
+jaraco-functools = "4.1.0"
+jedi = "0.19.2"
+jeepney = "0.8.0"
+jinja2 = "3.1.5"
+json5 = "0.10.0"
+jsonpointer = "3.0.0"
+jsonschema = "4.23.0"
+jsonschema-specifications = "2024.10.1"
+jupyter-events = "0.11.0"
+jupyter-lsp = "2.2.5"
+jupyter-client = "8.6.3"
+jupyter-core = "5.7.2"
+jupyter-server = "2.15.0"
+jupyter-server-terminals = "0.5.3"
+jupyterlab = "4.3.4"
+jupyterlab-pygments = "0.3.0"
+jupyterlab-server = "2.27.3"
+keyring = "25.6.0"
+kiwisolver = "1.4.8"
+markupsafe = "3.0.2"
+matplotlib = "3.10.0"
+matplotlib-inline = "0.1.7"
+mistune = "3.1.0"
+more-itertools = "10.6.0"
+mplfinance = "0.12.10b0"
+msgpack = "1.1.0"
+nbclient = "0.10.2"
+nbconvert = "7.16.5"
+nbformat = "5.10.4"
+nest-asyncio = "1.6.0"
+notebook = "7.3.2"
+notebook-shim = "0.2.4"
+numpy = "2.2.1"
+overrides = "7.7.0"
+packaging = "24.2"
+pandas = "2.2.3"
+pandocfilters = "1.5.1"
+parso = "0.8.4"
+pexpect = "4.9.0"
+pillow = "11.1.0"
+pkginfo = "1.12.0"
+platformdirs = "4.3.6"
+poetry = "2.0.1"
+poetry-core = "2.0.1"
+prometheus-client = "0.21.1"
+prompt-toolkit = "3.0.48"
+psutil = "6.1.1"
+ptyprocess = "0.7.0"
+pure-eval = "0.2.3"
+pycparser = "2.22"
+pygments = "2.19.1"
+pyparsing = "3.2.1"
+pyproject-hooks = "1.2.0"
+python-dateutil = "2.9.0.post0"
+python-dotenv = "1.0.1"
+python-json-logger = "3.2.1"
+pytz = "2024.2"
+pyyaml = "6.0.2"
+pyzmq = "26.2.0"
+rapidfuzz = "3.11.0"
+referencing = "0.36.1"
+requests = "2.32.3"
+requests-toolbelt = "1.0.0"
+rfc3339-validator = "0.1.4"
+rfc3986-validator = "0.1.1"
+rpds-py = "0.22.3"
+seaborn = "0.13.2"
+secretstorage = "3.3.3"
+send2trash = "1.8.3"
+shellingham = "1.5.4"
+six = "1.17.0"
+sniffio = "1.3.1"
+soupsieve = "2.6"
+stack-data = "0.6.3"
+terminado = "0.18.1"
+tinycss2 = "1.4.0"
+tomli = "2.2.1"
+tomlkit = "0.13.2"
+tornado = "6.4.2"
+traitlets = "5.14.3"
+trove-classifiers = "2025.1.15.22"
+types-python-dateutil = "2.9.0.20241206"
+typing-extensions = "4.12.2"
+tzdata = "2024.2"
+uri-template = "1.3.0"
+urllib3 = "2.3.0"
+virtualenv = "20.29.1"
+wcwidth = "0.2.13"
+webcolors = "24.11.1"
+webencodings = "0.5.1"
+websocket-client = "1.8.0"
+werkzeug = "3.1.3"
+zipp = "3.21.0"
+ta-lib = "^0.6.1"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+# Assume Python 3.8
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    "ALL"
+]
+
+ignore = [
+    "E501",
+    "G004", # Logging statement uses f-string
+    "A001", # Variable `hash` is shadowing a Python builtin
+    "A002", # Argument `id` is shadowing a Python builtin
+    "ARG002", # Unused method argument: `kwargs`
+    
+    "ANN001", # Missing type annotation for function argument `username`
+    "ANN002", # Missing type annotation for `*args`
+    "ANN003", # Missing type annotation for `**kwargs`
+    "ANN201", # Missing return type annotation for public function `get`
+    "ANN202", # Missing return type annotation for private function `innerfn`
+    
+    
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D102", # Missing docstring in public method
+    "RUF012", # Mutable class attributes should be annotated with `typing.ClassVar`
+    
+    "TID252", # Prefer absolute imports over relative imports from parent modules
+    "INP001", # File `user/views/views_user.py` is part of an implicit namespace package. Add an `__init__.py`.
+    "BLE001", # Do not catch blind exception: `Exception`
+    "D205", # 1 blank line required between summary line and description
+    "PLR2004", # Magic value used in comparison, consider replacing `5` with a constant variable
+    "RET505", # Unnecessary `else` after `return` statement
+    "ANN205", # Missing return type annotation for staticmethod `validate_profile_picture`
+    "RET506", # Unnecessary `elif` after `raise` statement
+    "INT001", # f-string is resolved before function call; consider `_("string %s") % arg`
+    "PTH123", # `open()` should be replaced by `Path.open()`
+    "D103", # Missing docstring in public function
+    "D106", # Missing docstring in public nested class
+    "D105", # Missing docstring in magic method
+    "ANN204", # Missing return type annotation for special method `__str__`
+    "DJ001", # Avoid using `null=True` on string-based fields such as `CharField`
+    "EM102", # Exception must not use an f-string literal, assign to variable first
+    "TRY003", # Avoid specifying long messages outside the exception class
+    "EM101", # Exception must not use a string literal, assign to variable first
+    
+    "PT009", # Use a regular `assert` instead of unittest-style `assertEqual
+    "S106", # Possible hardcoded password assigned to argument: "password"
+    "D104", # Missing docstring in public package
+    "TRY300", # Consider moving this statement to an `else` block
+    "S113", # Probable use of requests call without timeout
+    "TRY301", # Abstract `raise` to an inner function
+    "S105", # Possible hardcoded password assigned to: "GOOGLE_ACCESS_TOKEN_OBTAIN_URL"
+    "ERA001", # Found commented-out code
+    "PTH118", # `os.path.join()` should be replaced by `Path` with `/` operator
+    "DJ008", # Model does not define `__str__` method
+    "FIX002", # Line contains TODO, consider resolving the issue
+    "TD003", # Missing issue link on the line following this TODO
+    "TD004", # Missing colon in TODO
+    "TD002", # Missing author in TODO; try: `# TODO(<author_name>): ...` or `# TODO @<author_name>: ...`
+    "ANN206", # Missing return type annotation for classmethod `get_token`
+    "RET504", # Unnecessary assignment to `user` before `return` statement
+    "S311", # Standard pseudo-random generators are not suitable for cryptographic purposes
+    "N806", # Variable `UserModel` in function should be lowercase
+
+    "PLC2401", # Variable name `Veszprém` contains a non-ASCII character
+    "D107", # Missing docstring in `__init__`
+    "PT027", # Use `pytest.raises` instead of unittest-style `assertRaises`
+    "PERF203", # `try`-`except` within a loop incurs performance overhead
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+# Enable auto-formatting of code examples in docstrings. Markdown,
+# reStructuredText code/literal blocks and doctests are all supported.
+#
+# This is currently disabled by default, but it is planned for this
+# to be opt-out in the future.
+docstring-code-format = false
+
+# Set the line length limit used when formatting code snippets in
+# docstrings.
+#
+# This only has an effect when the `docstring-code-format` setting is
+# enabled.
+docstring-code-line-length = "dynamic"
