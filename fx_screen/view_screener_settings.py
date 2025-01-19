@@ -1,21 +1,22 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
+
 
 def create_tickers_bp(handler):
-    tickers_bp = Blueprint('settings', __name__)
+    tickers_bp = Blueprint("settings", __name__)
 
-    @tickers_bp.route('/list_options', methods=['GET'])
+    @tickers_bp.route("/list_options", methods=["GET"])
     def list_options():
         options = handler.get_options()
         return jsonify({"options": options}), 200
 
-    @tickers_bp.route('/options/<option_name>', methods=['GET'])
+    @tickers_bp.route("/options/<option_name>", methods=["GET"])
     def get_option(option_name):
         option = handler.get_option(option_name)
         if option is None:
             return jsonify({"error": f"Option '{option_name}' not found"}), 404
         return jsonify({option_name: option}), 200
 
-    @tickers_bp.route('/options/update/<option_name>', methods=['PUT'])
+    @tickers_bp.route("/options/update/<option_name>", methods=["PUT"])
     def update_option(option_name):
         try:
             new_data = request.json
@@ -30,9 +31,9 @@ def create_tickers_bp(handler):
                 return jsonify({"error": "Validation errors", "details": result["errors"]}), 400
 
         except Exception as e:
-            return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+            return jsonify({"error": f"An error occurred: {e!s}"}), 500
 
-    @tickers_bp.route('/options/create', methods=['POST'])
+    @tickers_bp.route("/options/create", methods=["POST"])
     def create_option():
         try:
             new_data = request.json
@@ -49,6 +50,6 @@ def create_tickers_bp(handler):
                 return jsonify({"error": "Validation errors", "details": result["errors"]}), 400
 
         except Exception as e:
-            return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+            return jsonify({"error": f"An error occurred: {e!s}"}), 500
 
     return tickers_bp
