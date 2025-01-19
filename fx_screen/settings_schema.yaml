@@ -41,6 +41,14 @@ indicators:
         - high
         - low
 
+active:
+  type: string
+  description: "Whether the strategy is active"
+  required: true
+  allowed_values:
+    - on
+    - off
+
 alerts:
   type: list
   description: "List of alerts with parameters"
