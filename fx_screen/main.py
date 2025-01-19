@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import uuid
 import logging
 import pandas as pd
+from view_screener_settings import tickers_bp
 
 app = Flask(__name__)
 load_dotenv()
@@ -15,6 +16,9 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
+
+# Register the Blueprint
+app.register_blueprint(tickers_bp, url_prefix='/settings')
 
 @app.route('/screen', methods=['GET'])
 def screen_forex():

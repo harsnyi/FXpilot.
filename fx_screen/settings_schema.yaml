@@ -1,0 +1,60 @@
+name:
+  type: string
+  description: "Name of the strategy"
+  required: true
+
+description:
+  type: string
+  description: "Description of the strategy"
+  required: false
+
+observed_tickers:
+  type: list
+  description: "List of supported tickers to observe"
+  required: true
+  allowed_values:
+    - EURUSD
+    - GBPUSD
+    - USDJPY
+    - AUDUSD
+    - NZDUSD
+
+indicators:
+  type: list
+  description: "List of indicators with parameters"
+  required: true
+  allowed_types:
+    - sma
+    - ema
+    - rsi
+    - macd
+  params_schema:
+    width:
+      type: integer
+      description: "Period of the indicator"
+    source:
+      type: string
+      description: "Price source"
+      allowed_values:
+        - close
+        - open
+        - high
+        - low
+
+alerts:
+  type: list
+  description: "List of alerts with parameters"
+  required: false
+  allowed_types:
+    - crossover
+    - threshold
+  params_schema:
+    direction:
+      type: string
+      description: "Direction of the crossover"
+      allowed_values:
+        - up
+        - down
+    indicators:
+      type: list
+      description: "List of indicators involved in the alert"
