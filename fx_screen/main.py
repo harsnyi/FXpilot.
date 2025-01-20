@@ -9,7 +9,6 @@ from flask import Flask, jsonify
 from screener import Screener
 from settings_handler import ScreeningOptionsHandler
 from view_screener_settings import create_tickers_bp
-from pathlib import Path
 
 app = Flask(__name__)
 load_dotenv()
